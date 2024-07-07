@@ -5,6 +5,8 @@ import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { VStack } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/react';
 
+
+
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -37,9 +39,9 @@ const Signup = () => {
       const data = new FormData();
       data.append('file', file);
       data.append('upload_preset', 'The radiance');
-      data.append('cloud_name', 'roadsidecoder');
+      data.append('cloud_name', 'dqgzemvzv');
 
-      fetch('CLOUDINARY_URL=cloudinary://<646415273922441>:<XwIjqjbQpcXQUbEiUvEZqD8fcgY>@dqgzemvzv', {
+      fetch('cloudinary://646415273922441:XwIjqjbQpcXQUbEiUvEZqD8fcgY@dqgzemvzv', {
         method: 'POST',
         body: data,
       })

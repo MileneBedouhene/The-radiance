@@ -2,7 +2,12 @@ const asyncHandler = require("express-async-handler");
 const User = require('../models/userModel');
 const generateToken = require('../config/generateToken');
 
+
+
+
 const registerUser = asyncHandler(async (req, res) => {
+
+    upload.single('image')
     const { name, email, password, pic } = req.body;
 
     if (!name || !email || !password) {
