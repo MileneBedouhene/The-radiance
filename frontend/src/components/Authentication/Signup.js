@@ -4,6 +4,9 @@ import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { VStack } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/react';
+import axios from "axios";
+import { useHistory } from 'react-router-dom';
+
 
 
 
@@ -17,6 +20,7 @@ const Signup = () => {
   const [pic, setPic] = useState('');
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const history = useHistory();
 
   const handlePasswordClick = () => setShowPassword(!showPassword);
   const handleConfirmPasswordClick = () => setShowConfirmPassword(!showConfirmPassword);
@@ -70,8 +74,67 @@ const Signup = () => {
     }
   };
 
-  const submitHandler = () => {
-    // Handle form submission logic here
+  const submitHandler = async() => {
+    setLoading(true);
+    if (!name || !email ||!password ||!confirmPassword){
+      toast({
+        title: 'Please Fill all the Fields',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      setLoading(false);
+      return;
+    }
+    if (password !== confirmPassword){
+      toast({
+        title: 'Password Do not Match',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      return;
+    }
+
+    try{
+      const config = {
+        headers:{
+          "Content-type" :"application/json",
+
+        },
+      };
+
+      const{data} = await axios.post(
+        "/api/user",
+        {name,email,password,pic},
+        config
+    );
+    toast({
+      title: 'Password Do not Match',
+      status: 'succes',
+      duration: 5000,
+      isClosable: true,
+      position: 'bottom',
+    });
+
+
+     localStorage.setItem('userInfo',JSON.stringify(data));
+
+     setLoading(false);
+     history.push('/chat')
+    }catch(error){
+      toast({
+        title: 'Error Occured!',
+        description : error.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      setLoading(false);
+    }
   };
 
   return (
